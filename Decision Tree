@@ -1,0 +1,29 @@
+from sklearn.tree import DecisionTreeClassifier
+from sklearn import tree
+import matplotlib.pyplot as plt
+
+X = [
+    [20, 1],
+    [25, 1],
+    [30, 0],
+    [35, 0],
+    [40, 0],
+    [45, 1]
+]
+
+y = ['No', 'No', 'Yes', 'Yes', 'Yes', 'No']
+
+model = DecisionTreeClassifier()
+model.fit(X, y)
+
+age = 32
+salary_high = 0
+
+prediction = model.predict([[age, salary_high]])
+
+print("Prediction:", prediction[0])
+
+tree.plot_tree(model, feature_names=['Age', 'Salary High'],
+               class_names=['No', 'Yes'], filled=True)
+
+plt.show()
