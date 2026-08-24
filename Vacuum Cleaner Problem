@@ -1,0 +1,42 @@
+from collections import deque
+
+def vacuum_cleaner():
+    start = (0, 0, 0)
+    goal = (1, 1, 0)
+
+    queue = deque([(start, [])])
+    visited = set()
+
+    while queue:
+        state, path = queue.popleft()
+
+        if state in visited:
+            continue
+
+        visited.add(state)
+        path = path + [state]
+
+        if state == goal:
+            return path
+
+        location, left, right = state
+
+        states = []
+
+        if location == 0:
+            states.append((1, left, right))
+            if left == 0:
+                states.append((0, 1, right))
+        else:
+            states.append((0, left, right))
+            if right == 0:
+                states.append((1, left, 1))
+
+        for s in states:
+            queue.append((s, path))
+
+solution = vacuum_cleaner()
+
+print("Location, Left, Right")
+for state in solution:
+    print(state)
