@@ -1,0 +1,38 @@
+colors = ['Red', 'Green', 'Blue']
+
+graph = {
+    'A': ['B', 'C'],
+    'B': ['A', 'C', 'D'],
+    'C': ['A', 'B', 'D'],
+    'D': ['B', 'C']
+}
+
+assignment = {}
+
+def is_safe(node, color):
+    for neighbour in graph[node]:
+        if neighbour in assignment and assignment[neighbour] == color:
+            return False
+    return True
+
+def solve():
+    if len(assignment) == len(graph):
+        return True
+
+    node = next(n for n in graph if n not in assignment)
+
+    for color in colors:
+        if is_safe(node, color):
+            assignment[node] = color
+
+            if solve():
+                return True
+
+            del assignment[node]
+
+    return False
+
+solve()
+
+for node, color in assignment.items():
+    print(node, "->", color)
